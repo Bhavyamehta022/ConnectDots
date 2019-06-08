@@ -1,5 +1,6 @@
 package com.bhavya.Connect3;
 
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
     int[] gameState={2,2,2,2,2,2,2,2,2};
     int[] [] win={{0,1,2},{3,4,5},{6,7,8},{0,3,6},{1,4,7},{2,5,8},{0,4,8},{2,4,6}};
     boolean gameIsActive=true;
-
+    LinearLayout layout;
     public void click(View view)
     {
 
@@ -26,11 +27,11 @@ public class MainActivity extends AppCompatActivity {
             gameState[tapped]=activePlayer;
             a.setTranslationY(-1000f);
             if (activePlayer == 0) {
-                a.setImageResource(R.drawable.green);
+                a.setImageResource(R.drawable.green_circle);
                 activePlayer = 1;
 
             } else {
-                a.setImageResource(R.drawable.red);
+                a.setImageResource(R.drawable.red_circle);
                 activePlayer = 0;
 
             }
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
                 b.setText(winner+" has won");
                 LinearLayout layout=(LinearLayout)findViewById(R.id.playAgain);
                 layout.setVisibility(View.VISIBLE);
+                gameIsActive=false;
 
             }
             else
@@ -77,8 +79,8 @@ public class MainActivity extends AppCompatActivity {
         gameIsActive=true;
         LinearLayout lay= (LinearLayout)findViewById(R.id.playAgain);
         lay.setVisibility(View.INVISIBLE);
-     android.support.v7.widget.GridLayout gr=findViewById(R.id.grid);
-        for(int i=0;i<gameState.length;i++)
+     ConstraintLayout gr=findViewById(R.id.grid);
+        for(int i=0;i<9;i++)
         {
 
             gameState[i]=2;
@@ -86,7 +88,12 @@ public class MainActivity extends AppCompatActivity {
 
         for(int i=0;i<gr.getChildCount();i++)
         {
-            ((ImageView)gr.getChildAt(i)).setImageResource(0);
+           layout=(LinearLayout) gr.getChildAt(i);
+           for(int j=0;j<layout.getChildCount();j++)
+           {
+               ((ImageView)layout.getChildAt(j)).setImageResource(0);
+           }
+
         }
     }
 
